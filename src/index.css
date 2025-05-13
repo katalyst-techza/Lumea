@@ -1,0 +1,99 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Great+Vibes&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 329 18% 16%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 329 18% 16%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 329 18% 16%;
+
+    --primary: 326 22% 56%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 326 13% 78%;
+    --secondary-foreground: 329 18% 16%;
+
+    --muted: 326 13% 95%;
+    --muted-foreground: 326 8% 46%;
+
+    --accent: 39 58% 63%;
+    --accent-foreground: 329 18% 16%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 326 13% 90%;
+    --input: 326 13% 90%;
+    --ring: 39 58% 63%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 329 18% 16%;
+    --foreground: 0 0% 98%;
+
+    --card: 329 18% 16%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 329 18% 16%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 326 22% 56%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 323 11% 23%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 323 11% 23%;
+    --muted-foreground: 326 8% 76%;
+
+    --accent: 39 58% 63%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 323 11% 23%;
+    --input: 323 11% 23%;
+    --ring: 39 58% 63%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  h1, h2, h3, h4, h5 {
+    @apply font-seasons;
+  }
+}
+
+/* Font substitutions */
+.font-seasons {
+  font-family: 'Playfair Display', serif;
+}
+
+.font-script {
+  font-family: 'Great Vibes', cursive;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
