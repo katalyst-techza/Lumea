@@ -1,6 +1,7 @@
+// src/components/BookingForm.tsx
 import React, { useState } from 'react';
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
+import client from "@/lib/pocketbaseClient"; // 🆕 You'll need this helper file
 
 export const BookingForm: React.FC = () => {
   const { toast } = useToast();
@@ -28,20 +29,16 @@ export const BookingForm: React.FC = () => {
     try {
       const guestCount = formData.guest_count ? parseInt(formData.guest_count, 10) : null;
 
-      const { error } = await supabase
-        .from('bookings')
-        .insert({
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone || null,
-          event_type: formData.event_type,
-          event_date: formData.event_date || null,
-          guest_count: guestCount,
-          message: formData.message || null,
-          status: 'pending',
-        });
-
-      if (error) throw error;
+      await client.collection('bookings').create({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone || null,
+        event_type: formData.event_type,
+        event_date: formData.event_date || null,
+        guest_count: guestCount,
+        message: formData.message || null,
+        status: 'pending',
+      });
 
       toast({
         title: "Inquiry Received",
@@ -72,7 +69,6 @@ export const BookingForm: React.FC = () => {
       setIsSubmitting(false);
     }
   };
-
   return (
     <form onSubmit={handleSubmit} className="space-y-6 max-w-2xl mx-auto">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

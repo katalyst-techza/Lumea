@@ -4,6 +4,7 @@ import { BalloonLogo } from '@/components/BalloonLogo';
 import { ServiceCard } from '@/components/ServiceCard';
 import { TestimonialCard } from '@/components/TestimonialCard';
 import { Link } from 'react-router-dom';
+import indexOne from '@/assets/images/indexOne.jpg';
 
 const Index = () => {
   return (
@@ -94,7 +95,7 @@ const Index = () => {
             <div className="md:w-1/2 mb-8 md:mb-0 md:pr-12">
               <h2 className="font-seasons text-3xl md:text-4xl text-luminous-brown mb-6">Creating Unforgettable Experiences</h2>
               <p className="text-luminous-brown/80 mb-4">
-                At Luminous Events, we believe that every celebration should be as unique as the individuals behind it. Our passionate team of event planners brings creativity, attention to detail, and a personal touch to every event we create.
+                At Luméa Events, we believe that every celebration should be as unique as the individuals behind it. Our passionate team of event planners brings creativity, attention to detail, and a personal touch to every event we create.
               </p>
               <p className="text-luminous-brown/80 mb-6">
                 From the initial consultation to the final farewell, we work closely with you to bring your vision to life, ensuring a seamless and stress-free experience that leaves you free to enjoy every moment.
@@ -108,7 +109,7 @@ const Index = () => {
                 <div className="w-full h-80 bg-luminous-mauve/20 rounded-lg"></div>
                 <div className="absolute top-6 right-6 bottom-6 left-6 bg-white rounded-lg shadow-lg overflow-hidden">
                   <img
-                    src="https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07"
+                    src={indexOne}
                     alt="Beautiful event setup"
                     className="w-full h-full object-cover"
                   />
@@ -134,19 +135,19 @@ const Index = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <TestimonialCard 
-              quote="Luminous Events turned our wedding day into a fairy tale. Every detail was perfect, and we didn't have to worry about a thing. It was truly the day of our dreams!"
+              quote="Luméa Events turned our wedding day into a fairy tale. Every detail was perfect, and we didn't have to worry about a thing. It was truly the day of our dreams!"
               name="Emily & Michael"
               role="Wedding"
             />
             
             <TestimonialCard 
-              quote="Our company gala was a tremendous success thanks to the Luminous Events team. The attention to detail and professional service exceeded our expectations."
+              quote="Our company gala was a tremendous success thanks to the Luméa Events team. The attention to detail and professional service exceeded our expectations."
               name="Sarah Johnson"
               role="Corporate Event"
             />
             
             <TestimonialCard 
-              quote="I wanted my daughter's sweet sixteen to be special, and Luminous Events delivered beyond my imagination. The decor, the entertainment, everything was perfect!"
+              quote="I wanted my daughter's sweet sixteen to be special, and Luméa Events delivered beyond my imagination. The decor, the entertainment, everything was perfect!"
               name="Jennifer Davis"
               role="Birthday Celebration"
             />

@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { format } from 'date-fns';
 import { Calendar, Clock, Mail, MessageCircle, Phone, User, Users } from 'lucide-react';
@@ -14,13 +13,17 @@ export const BookingDetails: React.FC<BookingDetailsProps> = ({ booking, onStatu
   const [message, setMessage] = useState('');
   const [showMessageField, setShowMessageField] = useState(false);
 
+  const formatSafeDate = (value?: string | null) =>
+    value && !isNaN(new Date(value).getTime())
+      ? format(new Date(value), 'MMMM dd, yyyy')
+      : 'Not specified';
+
   const handleStatusChange = async (status: 'accepted' | 'declined' | 'cancelled') => {
     if ((status === 'declined' || status === 'cancelled') && !showMessageField) {
-      // First show the message field
       setShowMessageField(true);
       return;
     }
-    
+
     try {
       setIsProcessing(true);
       await onStatusChange(booking.id, status, message);
@@ -46,7 +49,7 @@ export const BookingDetails: React.FC<BookingDetailsProps> = ({ booking, onStatu
             <p className="text-luminous-brown/80">{booking.name}</p>
           </div>
         </div>
-        
+
         <div className="flex items-start gap-3">
           <Mail className="h-5 w-5 text-luminous-mauve flex-shrink-0 mt-0.5" />
           <div>
@@ -54,7 +57,7 @@ export const BookingDetails: React.FC<BookingDetailsProps> = ({ booking, onStatu
             <p className="text-luminous-brown/80">{booking.email}</p>
           </div>
         </div>
-        
+
         {booking.phone && (
           <div className="flex items-start gap-3">
             <Phone className="h-5 w-5 text-luminous-mauve flex-shrink-0 mt-0.5" />
@@ -64,7 +67,7 @@ export const BookingDetails: React.FC<BookingDetailsProps> = ({ booking, onStatu
             </div>
           </div>
         )}
-        
+
         <div className="flex items-start gap-3">
           <Calendar className="h-5 w-5 text-luminous-mauve flex-shrink-0 mt-0.5" />
           <div>
@@ -72,19 +75,19 @@ export const BookingDetails: React.FC<BookingDetailsProps> = ({ booking, onStatu
             <p className="text-luminous-brown/80">{booking.event_type}</p>
           </div>
         </div>
-        
+
         {booking.event_date && (
           <div className="flex items-start gap-3">
             <Clock className="h-5 w-5 text-luminous-mauve flex-shrink-0 mt-0.5" />
             <div>
               <p className="font-medium">Event Date</p>
               <p className="text-luminous-brown/80">
-                {format(new Date(booking.event_date), 'MMMM dd, yyyy')}
+                {formatSafeDate(booking.event_date)}
               </p>
             </div>
           </div>
         )}
-        
+
         {booking.guest_count && (
           <div className="flex items-start gap-3">
             <Users className="h-5 w-5 text-luminous-mauve flex-shrink-0 mt-0.5" />
@@ -94,7 +97,7 @@ export const BookingDetails: React.FC<BookingDetailsProps> = ({ booking, onStatu
             </div>
           </div>
         )}
-        
+
         {booking.message && (
           <div className="flex items-start gap-3">
             <MessageCircle className="h-5 w-5 text-luminous-mauve flex-shrink-0 mt-0.5" />
@@ -104,21 +107,23 @@ export const BookingDetails: React.FC<BookingDetailsProps> = ({ booking, onStatu
             </div>
           </div>
         )}
-        
+
         <div className="flex items-start gap-3">
           <Calendar className="h-5 w-5 text-luminous-mauve flex-shrink-0 mt-0.5" />
           <div>
             <p className="font-medium">Inquiry Date</p>
             <p className="text-luminous-brown/80">
-              {format(new Date(booking.created_at), 'MMMM dd, yyyy')}
+              {formatSafeDate(booking.created_at)}
             </p>
           </div>
         </div>
       </div>
-      
+
       <div className="pt-4 border-t">
-        <h4 className="font-medium mb-2">Status: <span className="font-semibold capitalize">{booking.status}</span></h4>
-        
+        <h4 className="font-medium mb-2">
+          Status: <span className="font-semibold capitalize">{booking.status}</span>
+        </h4>
+
         {showMessageField ? (
           <div className="space-y-4">
             <div>
@@ -162,7 +167,7 @@ export const BookingDetails: React.FC<BookingDetailsProps> = ({ booking, onStatu
                 Accept
               </button>
             )}
-            
+
             {(booking.status === 'pending' || booking.status === 'accepted') && (
               <button
                 onClick={() => booking.status === 'pending' ? handleStatusChange('declined') : handleStatusChange('cancelled')}
@@ -172,7 +177,7 @@ export const BookingDetails: React.FC<BookingDetailsProps> = ({ booking, onStatu
                 {booking.status === 'pending' ? 'Decline' : 'Cancel'}
               </button>
             )}
-            
+
             {isProcessing && <span className="text-sm italic">Processing...</span>}
           </div>
         )}

@@ -15,7 +15,7 @@ export const Navbar: React.FC = () => {
             <Link to="/" className="flex items-center space-x-2">
               <BalloonLogo className="h-8 w-8" />
               <div style={{ marginLeft: '10px',}}>
-                <span className="font-seasons text-luminous-brown text-xl">Luminous</span>
+                <span className="font-seasons text-luminous-brown text-xl">Luméa</span>
                 <span className="font-script text-lg text-luminous-mauve ml-1">Events</span>
               </div>
             </Link>

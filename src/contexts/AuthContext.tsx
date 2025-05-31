@@ -1,12 +1,12 @@
-
+// src/contexts/AuthContext.tsx
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { supabase } from '@/integrations/supabase/client';
-import { Session, User } from '@supabase/supabase-js';
 import { useNavigate } from 'react-router-dom';
+import PocketBase, { Record } from 'pocketbase';
+
+const client = new PocketBase('http://127.0.0.1:8090');
 
 interface AuthContextType {
-  user: User | null;
-  session: Session | null;
+  user: Record | null;
   isAdmin: boolean;
   isLoading: boolean;
   signIn: (email: string, password: string) => Promise<void>;
@@ -17,112 +17,30 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [session, setSession] = useState<Session | null>(null);
+  const [user, setUser] = useState<Record | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Set up auth state listener FIRST
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, currentSession) => {
-        setSession(currentSession);
-        setUser(currentSession?.user ?? null);
-        
-        // Check if user is admin using setTimeout to prevent deadlock
-        if (currentSession?.user) {
-          setTimeout(async () => {
-            const { data } = await supabase
-              .from('admins')
-              .select('*')
-              .eq('id', currentSession.user.id)
-              .single();
-            
-            setIsAdmin(!!data);
-          }, 0);
-        } else {
-          setIsAdmin(false);
-        }
-      }
-    );
+    const authModel = client.authStore.model;
+    setUser(authModel as Record | null);
+    setIsAdmin(!!authModel);
+    setIsLoading(false);
 
-    // THEN check for existing session
-    supabase.auth.getSession().then(({ data: { session: currentSession } }) => {
-      setSession(currentSession);
-      setUser(currentSession?.user ?? null);
-      
-      if (currentSession?.user) {
-        supabase
-          .from('admins')
-          .select('*')
-          .eq('id', currentSession.user.id)
-          .single()
-          .then(({ data }) => {
-            setIsAdmin(!!data);
-            setIsLoading(false);
-          });
-      } else {
-        setIsLoading(false);
-      }
+    client.authStore.onChange(() => {
+      const currentUser = client.authStore.model;
+      setUser(currentUser as Record | null);
+      setIsAdmin(!!currentUser);
     });
-
-    return () => {
-      subscription.unsubscribe();
-    };
   }, []);
-
-  const cleanupAuthState = () => {
-    // Remove standard auth tokens
-    localStorage.removeItem('supabase.auth.token');
-    // Remove all Supabase auth keys from localStorage
-    Object.keys(localStorage).forEach((key) => {
-      if (key.startsWith('supabase.auth.') || key.includes('sb-')) {
-        localStorage.removeItem(key);
-      }
-    });
-    // Remove from sessionStorage if in use
-    Object.keys(sessionStorage || {}).forEach((key) => {
-      if (key.startsWith('supabase.auth.') || key.includes('sb-')) {
-        sessionStorage.removeItem(key);
-      }
-    });
-  };
 
   const signIn = async (email: string, password: string) => {
     try {
-      // Clean up existing state
-      cleanupAuthState();
-      
-      // Attempt global sign out
-      try {
-        await supabase.auth.signOut({ scope: 'global' });
-      } catch (err) {
-        // Continue even if this fails
-      }
-      
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-      
-      if (error) throw error;
-      
-      // Check if user is admin
-      if (data.user) {
-        const { data: adminData } = await supabase
-          .from('admins')
-          .select('*')
-          .eq('id', data.user.id)
-          .single();
-        
-        if (!adminData) {
-          await supabase.auth.signOut();
-          throw new Error('Unauthorized. Only admins can log in.');
-        }
-        
-        navigate('/admin/dashboard');
-      }
+      await client.collection('admins').authWithPassword(email, password);
+      setUser(client.authStore.model as Record);
+      setIsAdmin(true);
+      navigate('/admin/dashboard');
     } catch (error) {
       console.error('Error signing in:', error);
       throw error;
@@ -131,27 +49,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const signUp = async (email: string, password: string) => {
     try {
-      // Clean up existing state
-      cleanupAuthState();
-      
-      // Attempt global sign out
-      try {
-        await supabase.auth.signOut({ scope: 'global' });
-      } catch (err) {
-        // Continue even if this fails
-      }
-      
-      const { error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            is_admin: true,
-          },
-        },
-      });
-      
-      if (error) throw error;
+      await client.collection('admins').create({ email, password, passwordConfirm: password });
+      await signIn(email, password);
     } catch (error) {
       console.error('Error signing up:', error);
       throw error;
@@ -160,13 +59,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const signOut = async () => {
     try {
-      // Clean up auth state
-      cleanupAuthState();
-      
-      // Attempt global sign out
-      await supabase.auth.signOut({ scope: 'global' });
-      
-      // Force page reload for a clean state
+      client.authStore.clear();
+      setUser(null);
+      setIsAdmin(false);
       window.location.href = '/login';
     } catch (error) {
       console.error('Error signing out:', error);
@@ -176,7 +71,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const value = {
     user,
-    session,
     isAdmin,
     isLoading,
     signIn,
@@ -193,7 +87,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (context === undefined) {
+  if (!context) {
     throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;

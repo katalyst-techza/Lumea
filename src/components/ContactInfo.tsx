@@ -13,8 +13,8 @@ export const ContactInfo: React.FC = () => {
             <Phone size={20} className="text-white" />
           </div>
           <div>
-            <div className="text-sm text-luminous-brown/70">Phone</div>
-            <div className="font-seasons text-luminous-brown">(555) 123-4567</div>
+            <div className="text-sm text-luminous-brown/70">Phone/WhatsApp</div>
+            <div className="font-seasons text-luminous-brown">+27 71 103 4136</div>
           </div>
         </div>
         
@@ -24,18 +24,7 @@ export const ContactInfo: React.FC = () => {
           </div>
           <div>
             <div className="text-sm text-luminous-brown/70">Email</div>
-            <div className="font-seasons text-luminous-brown">hello@luminousevents.com</div>
-          </div>
-        </div>
-        
-        <div className="flex items-center space-x-3">
-          <div className="bg-luminous-mauve rounded-full p-3">
-            <MapPin size={20} className="text-white" />
-          </div>
-          <div>
-            <div className="text-sm text-luminous-brown/70">Office</div>
-            <div className="font-seasons text-luminous-brown">123 Celebration Ave</div>
-            <div className="text-luminous-brown/90">Suite 101, Event City</div>
+            <div className="font-seasons text-luminous-brown">hello@lumeaevents.co.za</div>
           </div>
         </div>
         
@@ -45,8 +34,8 @@ export const ContactInfo: React.FC = () => {
           </div>
           <div>
             <div className="text-sm text-luminous-brown/70">Hours</div>
-            <div className="font-seasons text-luminous-brown">Monday - Friday: 9AM - 6PM</div>
-            <div className="text-luminous-brown/90">Weekends: By Appointment</div>
+            <div className="font-seasons text-luminous-brown">Monday - Friday: 9AM - 5PM</div>
+            <div className="text-luminous-brown/90">Secure Your Event by Booking</div>
           </div>
         </div>
       </div>

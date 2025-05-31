@@ -13,7 +13,7 @@ export const Footer: React.FC = () => {
             <div className="flex items-center space-x-2">
               <BalloonLogo className="h-8 w-8" />
               <div>
-                <span className="font-seasons text-luminous-brown text-xl">Luminous</span>
+                <span className="font-seasons text-luminous-brown text-xl">Luméa</span>
                 <span className="font-script text-lg text-luminous-mauve ml-1">Events</span>
               </div>
             </div>
@@ -25,9 +25,8 @@ export const Footer: React.FC = () => {
           <div>
             <h3 className="font-seasons text-luminous-brown text-lg mb-4">Quick Links</h3>
             <ul className="space-y-2">
-              <li><Link to="/" className="text-luminous-brown/80 hover:text-luminous-gold transition-colors">Home</Link></li>
-              <li><Link to="/about" className="text-luminous-brown/80 hover:text-luminous-gold transition-colors">About</Link></li>
-              <li><Link to="/portfolio" className="text-luminous-brown/80 hover:text-luminous-gold transition-colors">Portfolio</Link></li>
+              <li><Link to="/" className="text-luminous-brown/80 hover:text-luminous-gold transition-colors">Terms of Service</Link></li>
+              <li><Link to="/about" className="text-luminous-brown/80 hover:text-luminous-gold transition-colors">FAQ</Link></li>
               <li><Link to="/booking" className="text-luminous-brown/80 hover:text-luminous-gold transition-colors">Booking</Link></li>
             </ul>
           </div>
@@ -47,22 +46,19 @@ export const Footer: React.FC = () => {
             <ul className="space-y-3">
               <li className="flex items-center space-x-2">
                 <Phone size={16} className="text-luminous-gold" />
-                <span className="text-luminous-brown/80">(555) 123-4567</span>
+                <span className="text-luminous-brown/80">+27 71 103 4136</span>
               </li>
               <li className="flex items-center space-x-2">
                 <Mail size={16} className="text-luminous-gold" />
-                <span className="text-luminous-brown/80">hello@luminousevents.com</span>
+                <span className="text-luminous-brown/80">hello@lumeaevents.co.za</span>
               </li>
-              <li className="flex items-center space-x-2">
-                <MapPin size={16} className="text-luminous-gold" />
-                <span className="text-luminous-brown/80">123 Celebration Ave, Suite 101, Event City</span>
-              </li>
+            
             </ul>
           </div>
         </div>
         
         <div className="border-t border-luminous-mauve/20 mt-8 pt-8 text-center text-sm text-luminous-brown/70">
-          <p>© {new Date().getFullYear()} Luminous Events. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Luméa Events. All rights reserved.</p>
         </div>
       </div>
     </footer>

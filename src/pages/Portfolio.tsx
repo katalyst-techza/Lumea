@@ -3,45 +3,55 @@ import React from 'react';
 import { PageHeader } from '@/components/PageHeader';
 import { PortfolioGallery } from '@/components/PortfolioGallery';
 import { Link } from 'react-router-dom';
+import weddingOne from '@/assets/images/weddingOne.jpg';
+import weddingThree from '@/assets/images/weddingThree.jpg';
+import socialOne from '@/assets/images/socialOne.jpg';
+import corporateOne from '@/assets/images/corporateOne.jpg';
+import babyShower from '@/assets/images/babyShower.jpg';
+import birthdayOne from '@/assets/images/birthdayOne.jpg'
+import birthdayTwo from '@/assets/images/birthdayTwo.jpg';
+import birthdayThree from '@/assets/images/birthdayThree.jpg';
+import funeralOne from '@/assets/images/funeralOne.jpg'
+
 
 const Portfolio = () => {
   // Sample portfolio items
   const portfolioItems = [
     {
       id: 1,
-      title: "Rose Garden Wedding",
-      category: "Wedding",
-      imageUrl: "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07"
+      title: "Baby Shower",
+      category: "Baby Shower",
+      imageUrl: babyShower
     },
     {
       id: 2,
-      title: "Coastal Corporate Retreat",
-      category: "Corporate",
-      imageUrl: "https://images.unsplash.com/photo-1469474968028-56623f02e42e"
+      title: "Birthday Girl",
+      category: "Birthday",
+      imageUrl: birthdayTwo
     },
     {
       id: 3,
-      title: "Twilight Anniversary",
-      category: "Anniversary",
-      imageUrl: "https://images.unsplash.com/photo-1500673922987-e212871fec22"
+      title: "Traditional Wedding",
+      category: "Wedding",
+      imageUrl: weddingThree
     },
     {
       id: 4,
-      title: "Elegant Charity Gala",
-      category: "Charity",
-      imageUrl: "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07"
+      title: "Birthday Boy",
+      category: "Birthday",
+      imageUrl: birthdayOne
     },
     {
       id: 5,
-      title: "Rustic Birthday Celebration",
-      category: "Birthday",
-      imageUrl: "https://images.unsplash.com/photo-1469474968028-56623f02e42e"
+      title: "Funeral Event",
+      category: "Funerals",
+      imageUrl: funeralOne
     },
     {
       id: 6,
-      title: "Modern Product Launch",
-      category: "Corporate",
-      imageUrl: "https://images.unsplash.com/photo-1500673922987-e212871fec22"
+      title: "Birthday Party",
+      category: "Birthday",
+      imageUrl: birthdayThree
     }
   ];
 
@@ -66,7 +76,7 @@ const Portfolio = () => {
             <div className="md:w-1/2 order-2 md:order-1">
               <h2 className="font-seasons text-3xl text-luminous-brown mb-6">Weddings</h2>
               <p className="text-luminous-brown/80 mb-4">
-                Your wedding day should be as unique as your love story. At Luminous Events, we specialize in creating personalized wedding experiences that reflect your personal style, cultural traditions, and vision.
+                Your wedding day should be as unique as your love story. At Luméa Events, we specialize in creating personalized wedding experiences that reflect your personal style, cultural traditions, and vision.
               </p>
               <p className="text-luminous-brown/80 mb-6">
                 From intimate garden ceremonies to grand ballroom receptions, we handle every detail with care and creativity. Our team works closely with you to select the perfect venue, design stunning floral arrangements, coordinate vendors, and manage all logistics so you can focus on creating memories that will last a lifetime.
@@ -83,7 +93,7 @@ const Portfolio = () => {
                 <div className="w-full h-96 bg-luminous-mauve/20 rounded-lg"></div>
                 <div className="absolute top-6 right-6 bottom-6 left-6 bg-white rounded-lg shadow-lg overflow-hidden">
                   <img
-                    src="https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07"
+                    src={weddingOne}
                     alt="Wedding celebration"
                     className="w-full h-full object-cover"
                   />
@@ -103,7 +113,7 @@ const Portfolio = () => {
                 <div className="w-full h-96 bg-luminous-gold/20 rounded-lg"></div>
                 <div className="absolute top-6 right-6 bottom-6 left-6 bg-white rounded-lg shadow-lg overflow-hidden">
                   <img
-                    src="https://images.unsplash.com/photo-1469474968028-56623f02e42e"
+                    src={corporateOne}
                     alt="Corporate event"
                     className="w-full h-full object-cover"
                   />
@@ -153,7 +163,7 @@ const Portfolio = () => {
                 <div className="w-full h-96 bg-luminous-brown/20 rounded-lg"></div>
                 <div className="absolute top-6 right-6 bottom-6 left-6 bg-white rounded-lg shadow-lg overflow-hidden">
                   <img
-                    src="https://images.unsplash.com/photo-1500673922987-e212871fec22"
+                    src={socialOne}
                     alt="Social event"
                     className="w-full h-full object-cover"
                   />

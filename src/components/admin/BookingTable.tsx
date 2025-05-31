@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { format } from 'date-fns';
 import { 
@@ -40,6 +39,13 @@ export const BookingTable: React.FC<BookingTableProps> = ({ bookings, onStatusCh
     }
   };
 
+  const formatSafeDate = (dateValue: string | undefined | null): string => {
+    if (dateValue && !isNaN(new Date(dateValue).getTime())) {
+      return format(new Date(dateValue), 'MMM dd, yyyy');
+    }
+    return 'Not specified';
+  };
+
   if (bookings.length === 0) {
     return (
       <div className="text-center p-8">
@@ -69,14 +75,12 @@ export const BookingTable: React.FC<BookingTableProps> = ({ bookings, onStatusCh
                 onClick={() => handleRowClick(booking)}
               >
                 <TableCell className="font-medium">
-                  {format(new Date(booking.created_at), 'MMM dd, yyyy')}
+                  {formatSafeDate(booking.created_at)}
                 </TableCell>
                 <TableCell>{booking.name}</TableCell>
                 <TableCell>{booking.event_type}</TableCell>
                 <TableCell>
-                  {booking.event_date 
-                    ? format(new Date(booking.event_date), 'MMM dd, yyyy')
-                    : 'Not specified'}
+                  {formatSafeDate(booking.event_date)}
                 </TableCell>
                 <TableCell className="text-center">
                   <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusClassName(booking.status)}`}>
